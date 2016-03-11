@@ -4,9 +4,9 @@ require __DIR__ . "/../class.logsys.php";
     "db" => array(
       "host" => "localhost",
       "port" => 3306,
-      "username" => "mercury",
-      "password" => "mercury",
-      "name" => "mercury",
+      "username" => "forcezine_mercury",
+      "password" => "xsZ9d6GX",
+      "name" => "forcezine_mercury",
       "table" => "main.logins",
       "token_table" => "main.reset_tokens"
     ),

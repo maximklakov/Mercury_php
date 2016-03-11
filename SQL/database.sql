@@ -5,6 +5,6 @@ CREATE DATABASE mercury
        TABLESPACE=pg_default;
 	   
 CREATE SCHEMA main
-       AUTHORIZATION mercury;
+       AUTHORIZATION forcezine_mercury;
 COMMENT ON SCHEMA main
   IS 'Main schema for most DB objects';

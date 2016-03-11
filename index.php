@@ -333,7 +333,7 @@ This theme is an open source project, and we don't have any copyrights on it
                         <ul class="list-inline social-buttons">
                             <li><a href="http://vk.com/id31747196"><i class="fa fa-vk"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            <li><a href="https://www.facebook.com/100007186382429"><i class="fa fa-facebook"></i></a>
                             </li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
                             </li>
@@ -348,7 +348,7 @@ This theme is an open source project, and we don't have any copyrights on it
                         <ul class="list-inline social-buttons">
                             <li><a href="http://vk.com/id112754527"><i class="fa fa-vk"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            <li><a href="https://www.facebook.com/galina.pedstryshko"><i class="fa fa-facebook"></i></a>
                             </li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
                             </li>
@@ -363,7 +363,7 @@ This theme is an open source project, and we don't have any copyrights on it
                         <ul class="list-inline social-buttons">
                             <li><a href="http://vk.com/id188877433"><i class="fa fa-vk"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            <li><a href="https://www.facebook.com/100002635164478"><i class="fa fa-facebook"></i></a>
                             </li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
                             </li>
