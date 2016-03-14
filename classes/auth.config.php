@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . "/../class.logsys.php";
+require __DIR__ . "/class.logsys.php";
 \Fr\LS::config(array(
     "db" => array(
       "host" => "localhost",

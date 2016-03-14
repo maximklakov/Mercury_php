@@ -1,5 +1,5 @@
 <?php
-require "config.php";
+require "../../classes/auth.config.php";
 \Fr\LS::init();
 ?>
 <!DOCTYPE html>

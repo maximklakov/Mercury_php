@@ -1,5 +1,5 @@
 <?php
-require "config.php";
+require "../../classes/auth.config.php";
 \Fr\LS::init();
 if(isset($_POST['action_login'])){
 	$identification = $_POST['login'];

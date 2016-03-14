@@ -29,7 +29,7 @@ namespace Fr;
 '---------------------------------------------------------------------------'
 */
 
-ini_set("display_errors", "on");
+//ini_set("display_errors", "on");
 
 class LS {
 
@@ -286,7 +286,9 @@ class LS {
         array_push(self::$config['pages']['no_login'], self::$config['pages']['login_page']);
         		
         self::$dbh = new \PDO("pgsql:dbname=". self::$config['db']['name'] ." host=". self::$config['db']['host'], self::$config['db']['username'], self::$config['db']['password']);
-        self::$db = true;		
+		if ( !is_null(self::$dbh) ) { self::$db = true; }
+		else { self::$db = false; }
+        		
 
         self::$cookie = isset($_COOKIE['logSyslogin']) ? $_COOKIE['logSyslogin'] : false;
         self::$session = isset($_SESSION['logSyscuruser']) ? $_SESSION['logSyscuruser'] : false;

@@ -325,7 +325,7 @@ This theme is an open source project, and we don't have any copyrights on it
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4"> <!--  sm-6 for 2 in a row,  sm-12 for 1 in a row    -->
                     <div class="team-member">
                         <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
                         <h4>Марина Рандюк</h4>
