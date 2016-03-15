@@ -1,4 +1,4 @@
-﻿
+
 --- Drop All
 /*
 Drop Table IF EXISTS main.objects cascade;
@@ -58,6 +58,7 @@ Drop Table IF EXISTS main.languages cascade;
 	CREATE SEQUENCE main.login_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.logins(
+			guid uuid,
 			Id INT primary key default nextval('main.login_id_seq'),
 			username VARCHAR(50),
 			eMail VARCHAR(50),
@@ -98,6 +99,7 @@ Drop Table IF EXISTS main.languages cascade;
 	CREATE SEQUENCE main.agent_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.agents(
+			guid uuid,
 			Id INT primary key default nextval('main.agent_id_seq'),
 			Domain_Id INT not null,
 			Login_id INT not null,
@@ -380,7 +382,7 @@ Drop Table IF EXISTS main.languages cascade;
 INSERT INTO main.agents (id, Domain_Id, First_Name, Last_Name,Email, Phone, Status, Login_id)
 VALUES (0, 0, 'test', 'test', 'test@test.test', '1234567', 1, 0);
 
-INSERT INTO main.logins(id, domain_id, username, password, password_salt, Email, Phone, status)
-values (0, 0, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '0000', 'test@test.test', '1234567', 0);
+INSERT INTO main.logins(id,  username, password, password_salt, Email, Phone, status)
+values (0, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '0000', 'test@test.test', '1234567', 0);
 
 
