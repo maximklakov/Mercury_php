@@ -1,5 +1,6 @@
 <?php
-require_once("lang/UA.php")
+require_once("lang/UA.php");
+require_once("../classes/site.config.php");
 ?>
 
 <!DOCTYPE html>
@@ -325,6 +326,9 @@ This theme is an open source project, and we don't have any copyrights on it
                 </div>
             </div>
             <div class="row">
+			<?php
+			$a = $_E->GetAllAgents();
+			?>
                 <div class="col-sm-4"> <!--  sm-6 for 2 in a row,  sm-12 for 1 in a row    -->
                     <div class="team-member">
                         <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
@@ -335,7 +339,7 @@ This theme is an open source project, and we don't have any copyrights on it
                             </li>
                             <li><a href="https://www.facebook.com/100007186382429"><i class="fa fa-facebook"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -350,7 +354,7 @@ This theme is an open source project, and we don't have any copyrights on it
                             </li>
                             <li><a href="https://www.facebook.com/galina.pedstryshko"><i class="fa fa-facebook"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -365,7 +369,7 @@ This theme is an open source project, and we don't have any copyrights on it
                             </li>
                             <li><a href="https://www.facebook.com/100002635164478"><i class="fa fa-facebook"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
                             </li>
                         </ul>
                     </div>
