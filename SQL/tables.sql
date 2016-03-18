@@ -1,6 +1,6 @@
 
 --- Drop All
-/*
+
 Drop Table IF EXISTS main.objects cascade;
 Drop Table IF EXISTS main.materials cascade;
 Drop Table IF EXISTS main.flat_Types cascade;
@@ -11,15 +11,17 @@ Drop Table IF EXISTS main.cities cascade;
 Drop Table IF EXISTS main.object_Types cascade;
 Drop Table IF EXISTS main.texts cascade;
 Drop Table IF EXISTS main.localisations cascade;
-Drop Table IF EXISTS main.roles cascade;
 Drop Table IF EXISTS main.agent_roles cascade;
-Drop Table IF EXISTS main.agent_phones cascade;
-Drop Table IF EXISTS main.phone_types cascade;
+Drop Table IF EXISTS main.roles cascade;
+Drop Table IF EXISTS main.agent_fields cascade;
+Drop Table IF EXISTS main.field_types cascade;
 Drop Table IF EXISTS main.agents cascade;
 Drop Table IF EXISTS main.logins cascade;
+Drop Table IF EXISTS main.reset_tokens cascade;
+Drop Table IF EXISTS main.user_devices cascade;
 Drop Table IF EXISTS main.domains cascade;
 Drop Table IF EXISTS main.languages cascade;
-*/
+
 
 /*******************************************-=[ languages ]=-*******************************************/
 	CREATE SEQUENCE main.language_id_seq MINVALUE 5;
@@ -34,7 +36,7 @@ Drop Table IF EXISTS main.languages cascade;
 	INSERT INTO main.Languages (Id, Shortest_Name, Short_Name, Full_name) values (0, 'UA', 'UKR', 'Українська');
 
 	ALTER SEQUENCE main.language_id_seq OWNED BY main.languages.id;
-/*******************************************-=[ languages ]=-*******************************************/
+/*******************************************-=[ /languages ]=-*******************************************/
 
 /*******************************************-=[ domains ]=-*******************************************/
 	CREATE SEQUENCE main.domain_id_seq MINVALUE 5;
@@ -50,11 +52,11 @@ Drop Table IF EXISTS main.languages cascade;
 
 	INSERT INTO main.Domains (Id, Domain_Name, Default_Lang_Id) values (0, '[Default]', 0);
 	
-	ALTER SEQUENCE main.domain_id_seq OWNED BY main.languages.id;
-/*******************************************-=[ domains ]=-*******************************************/
+	ALTER SEQUENCE main.domain_id_seq OWNED BY main.domains.id;
+/*******************************************-=[ /domains ]=-*******************************************/
 
 
-/*******************************************-=[  ]=-*******************************************/
+/*******************************************-=[ logins ]=-*******************************************/
 	CREATE SEQUENCE main.login_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.logins(
@@ -66,13 +68,13 @@ Drop Table IF EXISTS main.languages cascade;
 			password_salt varchar(20) NOT NULL,
 			created timestamp NOT NULL default now(),
 			attempt varchar(15) NOT NULL DEFAULT '0',
-			Status smallINT not null default 0
+			Status SMALLINT not null default 0
 		);
 		
-	ALTER SEQUENCE main.login_id_seq OWNED BY main.languages.id;
-/*******************************************-=[  ]=-*******************************************/
+	ALTER SEQUENCE main.login_id_seq OWNED BY main.logins.id;
+/*******************************************-=[ /logins ]=-*******************************************/
 
-/*******************************************-=[  ]=-*******************************************/
+/*******************************************-=[ reset_tokens ]=-*******************************************/
 
 	CREATE TABLE IF NOT EXISTS main.reset_tokens (
 		token varchar(40) NOT NULL, --COMMENT 'The Unique Token Generated',
@@ -80,26 +82,26 @@ Drop Table IF EXISTS main.languages cascade;
 		requested varchar(20) NOT NULL --COMMENT 'The Date when token was created'
 	) ;
 
-/*******************************************-=[  ]=-*******************************************/
+/*******************************************-=[ /reset_tokens ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
 	CREATE SEQUENCE main.user_devices_id_seq MINVALUE 5;
 	
 	CREATE TABLE IF NOT EXISTS main.user_devices (
-	  id  INT primary key default nextval('main.user_devices_id_seq'),
-	  uid INT NOT NULL, --COMMENT 'The user''s ID',
-	  token varchar(15) NOT NULL, --COMMENT 'A unique token for the user''s device',
-	  last_access varchar(20) NOT NULL
+	  Id  INT primary key default nextval('main.user_devices_id_seq'),
+	  UId INT NOT NULL, --COMMENT 'The user''s ID',
+	  Token varchar(15) NOT NULL, --COMMENT 'A unique token for the user''s device',
+	  Last_access varchar(20) NOT NULL
 	);
 	
-	ALTER SEQUENCE main.user_devices_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.user_devices_id_seq OWNED BY main.user_devices.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
 	CREATE SEQUENCE main.agent_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.agents(
-			guid uuid,
+			Guid uuid,
 			Id INT primary key default nextval('main.agent_id_seq'),
 			Domain_Id INT not null,
 			Login_id INT not null,
@@ -107,38 +109,36 @@ Drop Table IF EXISTS main.languages cascade;
 			Last_Name VARCHAR(50),
 			EMail VARCHAR(50) not null,
 			Phone VARCHAR(50) not null,
-			Status smallINT not null default 0
+			Status SMALLINT not null default 0
 		);
 
 	ALTER TABLE main.agents ADD CONSTRAINT FK_Agent_Domain foreign key (Domain_Id) references main.Domains (Id);
 	ALTER TABLE main.agents ADD CONSTRAINT UK_Agents unique (Domain_Id,EMail);
 	ALTER TABLE main.agents ADD CONSTRAINT UK_AgentsLogin unique (Login_id);
 	
-	ALTER SEQUENCE main.agent_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.agent_id_seq OWNED BY main.agents.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
-	CREATE TABLE IF NOT EXISTS  main.phone_types (
+	CREATE TABLE IF NOT EXISTS  main.field_types (
 	Id INT primary key,
-	language_id INT not null default 0,
-	phone_type VARCHAR(25) not null unique
+	Is_multi SMALLINT not null default 0, -- 0 - Singular, >0 - multi
+	Field_type VARCHAR(25) not null
 	);
-	INSERT INTO main.phone_types values (1, 0,'personal');
+		
+	CREATE SEQUENCE main.agent_phone_id_seq MINVALUE 1;
 	
-	
-	CREATE SEQUENCE main.agent_phone_id_seq MINVALUE 5;
-	
-	CREATE TABLE IF NOT EXISTS  main.agent_phones (
+	CREATE TABLE IF NOT EXISTS  main.agent_fields (
 	Id INT primary key default nextval('main.agent_phone_id_seq'),
 	Agent_Id INT not null,
-	phone_type_id INT not null default 1,  --- Personal
-	Number VARCHAR(25) not null
+	Field_type_id INT not null default 1,  --- Personal
+	f_value VARCHAR(255) not null
 	);
 	
-	ALTER TABLE  main.agent_phones ADD CONSTRAINT FK_Phones_Agent foreign key (Agent_Id) references main.agents (Id);
-	ALTER TABLE  main.agent_phones ADD CONSTRAINT FK_AgPhones_Type foreign key (phone_type_id) references main.agent_phones (Id);
+	ALTER TABLE  main.agent_fields ADD CONSTRAINT FK_Phones_Agent foreign key (Agent_Id) references main.agents (Id);
+	ALTER TABLE  main.agent_fields ADD CONSTRAINT FK_AgField_Types foreign key (field_type_id) references main.field_types (Id);
 	
-	ALTER SEQUENCE main.agent_phone_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.agent_phone_id_seq OWNED BY main.field_types.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -158,7 +158,7 @@ Drop Table IF EXISTS main.languages cascade;
 	ALTER TABLE main.localisations ADD CONSTRAINT FK_Local_Lang foreign key (Lang_Id) references main.Languages (Id);
 	ALTER TABLE main.localisations ADD CONSTRAINT FK_Local_Domain foreign key (Domain_Id) references main.Domains (Id);
 	
-	ALTER SEQUENCE main.localisation_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.localisation_id_seq OWNED BY main.localisations.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -173,7 +173,7 @@ Drop Table IF EXISTS main.languages cascade;
 
 	ALTER TABLE main.Texts ADD CONSTRAINT FK_Texts_Domain foreign key (Domain_Id) references main.Domains (Id);
 	
-	ALTER SEQUENCE main.text_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.text_id_seq OWNED BY main.texts.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -185,7 +185,7 @@ Drop Table IF EXISTS main.languages cascade;
 			Short_Name  VARCHAR(5)
 		);
 		
-	ALTER SEQUENCE main.object_type_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.object_type_id_seq OWNED BY main.object_types.id;
 	
 	INSERT INTO main.object_types (Obj_Name, Short_Name) 
 		   values ('Квартира','К'),  ('Будинок','Б') , ('Ділянка', 'Д');
@@ -203,7 +203,7 @@ Drop Table IF EXISTS main.languages cascade;
 
 	INSERT INTO main.cities(Id, City_Name, City_Short_Name) values (1, 'Вінниця', 'Вн');
 	
-	ALTER SEQUENCE main.city_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.city_id_seq OWNED BY main.cities.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -218,7 +218,7 @@ Drop Table IF EXISTS main.languages cascade;
 
 	ALTER TABLE main.regions ADD CONSTRAINT FK_Reg_City foreign key (City_Id) references main.Cities(Id);
 	
-	ALTER SEQUENCE main.region_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.region_id_seq OWNED BY main.regions.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -233,7 +233,7 @@ Drop Table IF EXISTS main.languages cascade;
 
 	ALTER TABLE main.streets ADD CONSTRAINT FK_Street_Region foreign key (Region_Id) references main.Regions(Id);
 	
-	ALTER SEQUENCE main.street_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.street_id_seq OWNED BY main.streets.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -245,7 +245,7 @@ Drop Table IF EXISTS main.languages cascade;
 		Short_Type nchar(3)
 	);
 	
-	ALTER SEQUENCE main.flat_types_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.flat_types_id_seq OWNED BY main.flat_types.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -257,7 +257,7 @@ Drop Table IF EXISTS main.languages cascade;
 		Short_Name nchar(3)
 	);
 	
-	ALTER SEQUENCE main.material_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.material_id_seq OWNED BY main.materials.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -269,23 +269,23 @@ Drop Table IF EXISTS main.languages cascade;
 		Domain_Id INT not null,
 		Agent_Id INT not null,
 		Phone_Id INT,
-		Shared_Option smallINT not null default 0, -- 0 = Private, 1 = Domain, 2 = Public
+		Shared_Option SMALLINT not null default 0, -- 0 = Private, 1 = Domain, 2 = Public
 		Obj_Type INT not null, --- House, Flat 
 		Land_Area float, 
 		Apart_Area float, 
 		Living_Area float, 
 		Kitchen_Area float , 
-		Rooms smallINT,
-		Rooms_Type_Id smallINT, -- 
+		Rooms SMALLINT,
+		Rooms_Type_Id SMALLINT, -- 
 		Region_Id INT,
 		Street_Id INT,
 		Building_Number VARCHAR(5),
 		Flat_Number INT,
-		Flat_Type_Id smallINT,
-		FloorNumber smallINT,
-		Floors smallINT,
-		Building_Type_Id  smallINT, -- material
-		HasPhone smallINT,
+		Flat_Type_Id SMALLINT,
+		FloorNumber SMALLINT,
+		Floors SMALLINT,
+		Building_Type_Id  SMALLINT, -- material
+		HasPhone SMALLINT,
 		Orienter VARCHAR(200),
 		Short_Description VARCHAR(500),
 		Full_Description VARCHAR(4000),
@@ -302,7 +302,7 @@ Drop Table IF EXISTS main.languages cascade;
 	ALTER TABLE main.objects  ADD CONSTRAINT FK_Object_Streets foreign key (Street_Id) references main.Streets (Id);
 	ALTER TABLE main.objects  ADD CONSTRAINT FK_Object_Regions foreign key (Region_Id) references main.Regions (Id);
 	
-	ALTER SEQUENCE main.object_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.object_id_seq OWNED BY main.objects.id;
 	
 /*******************************************-=[  ]=-*******************************************/
 
@@ -317,31 +317,31 @@ Drop Table IF EXISTS main.languages cascade;
 			First_Name  VARCHAR(50),
 			Mid_Name VARCHAR(50),
 			Birth_Date Date,
-			Client_Type smallINT, -- 1 - Byer, 2 - Seller, 3- Both, 4 - Rent(look), 5- Rent(give)
+			Client_Type SMALLINT, -- 1 - Byer, 2 - Seller, 3- Both, 4 - Rent(look), 5- Rent(give)
 			Tel1  VARCHAR(20),
 			Tel2  VARCHAR(20),
 			Tel3 VARCHAR(20),
 			Contract_Id VARCHAR(20),
 			Contract_Date Date,
 			Agent_Phone_Id INT,
-			Document_Type_Id smallINT,
+			Document_Type_Id SMALLINT,
 			Document_Series VARCHAR(10),
 			Document_Number VARCHAR(10),
 			Document_Issued Date,
 			StreetId INT,
 			Building_No VARCHAR(5),
 			Flat_No INT,
-			Is_For_Rent smallINT,
+			Is_For_Rent SMALLINT,
 			Short_description VARCHAR(200),
 			Full_Description  VARCHAR(500)
 			);
 
 	ALTER TABLE main.clients ADD CONSTRAINT FK_Clients_Agent foreign key (Agent_Id) references main.Agents(id);
 	ALTER TABLE main.clients ADD CONSTRAINT FK_Clients_Domains foreign key (Domain_Id) references main.Domains(id);
-	ALTER TABLE main.clients ADD CONSTRAINT FK_Clients_Ag_Phone foreign key (Agent_Phone_Id) references main.Agent_Phones(id);
+	ALTER TABLE main.clients ADD CONSTRAINT FK_Clients_Ag_Phone foreign key (Agent_Phone_Id) references main.Agent_Fields(id);
 	ALTER TABLE main.clients ADD CONSTRAINT FK_Clients_Streets foreign key (StreetId) references main.Streets(id);
 	
-	ALTER SEQUENCE main.client_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.client_id_seq OWNED BY main.clients.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -350,13 +350,13 @@ Drop Table IF EXISTS main.languages cascade;
 	CREATE TABLE IF NOT EXISTS  main.roles(
 			Id INT primary key default nextval('main.role_id_seq'),
 			Role_Name VARCHAR(16) not null,
-			Role_Level  smallINT not null default 0, -- user cannot grant access of => rights to other users.
-			Status smallINT not null default 0
+			Role_Level  SMALLINT not null default 0, -- user cannot grant access of => rights to other users.
+			Status SMALLINT not null default 0
 		);
 
 	ALTER TABLE main.roles ADD CONSTRAINT UK_Roles unique (Role_Name);
 	
-	ALTER SEQUENCE main.role_id_seq OWNED BY main.languages.id;
+	ALTER SEQUENCE main.role_id_seq OWNED BY main.roles.id;
 /*******************************************-=[  ]=-*******************************************/
 
 /*******************************************-=[  ]=-*******************************************/
@@ -373,16 +373,6 @@ Drop Table IF EXISTS main.languages cascade;
 	
 /*******************************************-=[  ]=-*******************************************/
 
-/*******************************************-=[  ]=-*******************************************/
 
-
-
-
-
-INSERT INTO main.agents (id, Domain_Id, First_Name, Last_Name,Email, Phone, Status, Login_id)
-VALUES (0, 0, 'test', 'test', 'test@test.test', '1234567', 1, 0);
-
-INSERT INTO main.logins(id,  username, password, password_salt, Email, Phone, status)
-values (0, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '0000', 'test@test.test', '1234567', 0);
 
 
