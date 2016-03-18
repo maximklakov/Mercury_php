@@ -104,12 +104,14 @@ Drop Table IF EXISTS main.languages cascade;
 			Guid uuid,
 			Id INT primary key default nextval('main.agent_id_seq'),
 			Domain_Id INT not null,
-			Login_id INT not null,
+			Login_Id INT not null,
 			First_Name VARCHAR(50) not null,
 			Last_Name VARCHAR(50),
 			EMail VARCHAR(50) not null,
 			Phone VARCHAR(50) not null,
-			Status SMALLINT not null default 0
+			Status SMALLINT not null default 0,
+			Profile_Picture VARCHAR(250),
+			position VARCHAR(50)
 		);
 
 	ALTER TABLE main.agents ADD CONSTRAINT FK_Agent_Domain foreign key (Domain_Id) references main.Domains (Id);
