@@ -8,6 +8,7 @@ require_once __DIR__ . '/../common.php';
 class EmployeeRepository extends BaseRepository {
 	
 	function GetByClause(string $clause, array $parameters = null){
+		
 		global $_C;
 		$sql = 'Select first_name, last_name, id, guid, profile_picture, position from main.agents where Domain_Id = :domain';
 		$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
@@ -21,6 +22,8 @@ class EmployeeRepository extends BaseRepository {
 		}
 		
 		$sth->execute($parameters);
+		
+		$agents = array();
 		
 		foreach ($sth->fetchAll() as $ag)
 		{
@@ -36,14 +39,13 @@ class EmployeeRepository extends BaseRepository {
 					
 			$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
 			$sth->execute($parameters);
-
-			$fields = $sth->fetchAll();
 			
 			foreach ($sth->fetchAll() as $fl)
-			{
-				$agents[$fl['fl']]->social[$fl['field_type']] = $fl['f_value'];
+			{ 
+				$agents[$fl['id']]->fields[$fl['field_type']] = $fl['f_value'];
 			}
 		}
+		return $agents;
 	}
 	
    function GetAll(){

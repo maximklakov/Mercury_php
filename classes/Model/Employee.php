@@ -9,18 +9,18 @@ class Employee extends BaseEntity {
 	
 	public $phones = array();
 		
-    // Social networks references
-	public $social = array();
+    // Additional fields (like social, etc.)
+	public $fields = array();
 
 	public $profilePicture;
 	
 	public $position;
 	
-	function __construct($guid = null, $name = null, $phones = null, $social = null, $profilePicture = null, $position = null){
+	function __construct($guid = null, $name = null, $phones = null, $fields = null, $profilePicture = null, $position = null){
 		$this->guid = $guid;
 		$this->name = $name;
 		if (!is_null($phones)) {$this->phones = $phones;}
-		$this->social = $social;
+		if (!is_null($fields)) {$this->fields = $fields;}
 		$this->profilePicture = $profilePicture;
 		$this->position = $position;		
 	}

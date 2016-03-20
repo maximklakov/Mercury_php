@@ -327,23 +327,38 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
             <div class="row">
 			<?php
-			$a = $_E->GetAllAgents();
+			$agentas = $_E->GetAllAgents();
+			$i=0;
+			foreach ($agentas as $a)
+			{
+				if ($i == 3){
+					echo '</div>\n<div class="row">';
+					$i =0;
+				}
 			?>
-                <div class="col-sm-4"> <!--  sm-6 for 2 in a row,  sm-12 for 1 in a row    -->
+			<div class="col-sm-4"> <!--  sm-6 for 2 in a row,  sm-12 for 1 in a row    -->
                     <div class="team-member">
-                        <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Марина Рандюк</h4>
-                        <p class="text-muted">Заступник Директора</p>
+                        <img src="<?=$a->profilePicture?>" class="img-responsive img-circle" alt="">
+                        <h4><?=$a->name?></h4>
+                        <p class="text-muted"><?=$a->position?></p>
                         <ul class="list-inline social-buttons">
-                            <li><a href="http://vk.com/id31747196"><i class="fa fa-vk"></i></a>
-                            </li>
-                            <li><a href="https://www.facebook.com/100007186382429"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
-                            </li>
+						<?php
+				foreach ($a->fields as $key => $value)
+					{
+						if (substr($key, 0, 6) == 'social')
+						{
+							echo "<li><a href=\"{$value}\"><i class=\"fa fa-".substr($key,7).'"></i></a></li>';
+						}
+					}
+						?>
                         </ul>
                     </div>
                 </div>
+			<?php
+			$i++;
+			}
+			?>
+                
                 <div class="col-sm-4">
                     <div class="team-member">
                         <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
