@@ -331,10 +331,10 @@ This theme is an open source project, and we don't have any copyrights on it
 			$i=0;
 			foreach ($agentas as $a)
 			{
-				if ($i == 3){
+ 				if ($i == 3){
 					echo '</div>\n<div class="row">';
 					$i =0;
-				}
+				} 
 			?>
 			<div class="col-sm-4"> <!--  sm-6 for 2 in a row,  sm-12 for 1 in a row    -->
                     <div class="team-member">
@@ -358,37 +358,7 @@ This theme is an open source project, and we don't have any copyrights on it
 			$i++;
 			}
 			?>
-                
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Галина Педстружко</h4>
-                        <p class="text-muted">Спеціаліст з нерухомості</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="http://vk.com/id112754527"><i class="fa fa-vk"></i></a>
-                            </li>
-                            <li><a href="https://www.facebook.com/galina.pedstryshko"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Ірина Бєдна</h4>
-                        <p class="text-muted">Провідний Спеціаліст</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="http://vk.com/id188877433"><i class="fa fa-vk"></i></a>
-                            </li>
-                            <li><a href="https://www.facebook.com/100002635164478"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-odnoklassniki"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">

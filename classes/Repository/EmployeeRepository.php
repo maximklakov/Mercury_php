@@ -10,7 +10,7 @@ class EmployeeRepository extends BaseRepository {
 	function GetByClause(string $clause, array $parameters = null){
 		
 		global $_C;
-		$sql = 'Select first_name, last_name, id, guid, profile_picture, position from main.agents where Domain_Id = :domain';
+		$sql = 'Select first_name, last_name, id, guid, profile_picture, position from main.agents where Domain_Id = :domain order by id';
 		$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
 		
 		if (!is_null($parameters) && (is_array ($parameters)))
@@ -35,7 +35,8 @@ class EmployeeRepository extends BaseRepository {
 			$sql = 'select af.f_value, ft.field_type, a.id  from main.field_types ft 
 						inner join main.agent_fields af on af.field_type_id = ft.id 
 						inner join main.agents a on a.id = af.agent_id
-					where a.domain_id=:domain';
+					where a.domain_id=:domain
+					order by a.id';
 					
 			$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
 			$sth->execute($parameters);
