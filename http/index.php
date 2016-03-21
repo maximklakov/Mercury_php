@@ -332,7 +332,7 @@ This theme is an open source project, and we don't have any copyrights on it
 			foreach ($agentas as $a)
 			{
  				if ($i == 3){
-					echo '</div>\n<div class="row">';
+					echo '</div> <div class="row">';
 					$i =0;
 				} 
 			?>
@@ -347,6 +347,7 @@ This theme is an open source project, and we don't have any copyrights on it
 					{
 						if (substr($key, 0, 6) == 'social')
 						{
+							if ($key == 'social_ria') {$key = 'social_home';}
 							echo "<li><a href=\"{$value}\"><i class=\"fa fa-".substr($key,7).'"></i></a></li>';
 						}
 					}

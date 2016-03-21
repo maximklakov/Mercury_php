@@ -7,7 +7,7 @@ require_once __DIR__ . '/../common.php';
 
 class EmployeeRepository extends BaseRepository {
 	
-	function GetByClause(string $clause, array $parameters = null){
+	function GetByClause($clause, $parameters = null){
 		
 		global $_C;
 		$sql = 'Select first_name, last_name, id, guid, profile_picture, position from main.agents where Domain_Id = :domain order by id';
