@@ -4,8 +4,8 @@ $_C = array(
     'db' => array(
       'host' => 'localhost',
       'port' => 3306,
-      'username' => 'mercury',
-      'password' => 'xsZ9d6GX',
+      'username' => 'mercury', // amuletgrey_estate
+      'password' => 'xsZ9d6GX', // hFPaqa2U
       'name' => 'forcezine_mercury'
     ),
   'pages' => array(

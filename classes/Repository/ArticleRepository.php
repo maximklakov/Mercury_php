@@ -2,13 +2,14 @@
 namespace Repository;
 
 require_once __DIR__ . '/BaseRepository.php';
-require_once __DIR__ . '/../Model/Employee.php';
+require_once __DIR__ . '/../Model/Article.php';
 require_once __DIR__ . '/../common.php';
 
-class EmployeeRepository extends BaseRepository {
+class ArticleRepository extends BaseRepository {
 	
 	protected function constructWhereClause($parameters = null){
-		
+		if (!is_null($parameters) && (is_array ($parameters)))
+		{
 		 $returnString = ' where 1 = 1 ';
 		 
 		 foreach ($parameters as $key => $param){
@@ -19,15 +20,23 @@ class EmployeeRepository extends BaseRepository {
 				case ':guid':
 					$returnString.= ' and a.guid = :guid';
 					break;
-				case ':status':
-					$returnString.= ' and a.status = :status';
+				case ':category':
+					$returnString.= ' and a.category = :category';
+					break;
+				case ':subcategory':
+					$returnString.= ' and a.subcategory = :subcategory';
 					break;
 			}
 		 }
-	  return $returnString;			
+		 
+	 return $returnString;			
+		}
+		else return '';
 	}
 	
 	protected function GetByParameters($parameters = null){
+		
+		
 		global $_C;		
 		
 		if (!is_null($parameters) && (is_array ($parameters)))
@@ -40,38 +49,35 @@ class EmployeeRepository extends BaseRepository {
 		
 		$where = $this->constructWhereClause($parameters);
 		
-		$sql = 'Select name, id, guid, profile_picture, position from main.agents a '.$where.' order by id';
+		$sql = 'Select id, guid, name, category, subcategory, picture, date1, date2, text1, text2, article_text, domain_id, order_value 
+				from  main.articles a '.$this->constructWhereClause($parameters).' order by order_value, id';
+
 		$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));		
 		
 		$sth->execute($parameters);
 		
-		$agents = array();
+		$articles = array();
 		
 		foreach ($sth->fetchAll() as $ag)
 		{
-			$agents[$ag['id']] = new \Model\Employee($ag['guid'], $ag['name'], null, null, $ag['profile_picture'], $ag['position']);
+			$articles[$ag['name']] = new \Model\Article($ag['guid'], $ag['category'], $ag['subcategory'], $ag['name'], $ag['picture'], 
+													  $ag['date1'], $ag['text1'], $ag['article_text'], $ag['date2'], $ag['text2'], $ag['order_value']);
 		}
 		
-		if (count($agents) > 0){
-			
-			$sql = 'select af.f_value, ft.field_type, a.id  from main.field_types ft 
-						inner join main.agent_fields af on af.field_type_id = ft.id 
-						inner join main.agents a on a.id = af.agent_id '.
-					$where
-					.' order by a.id';
-	
-			$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
-			$sth->execute($parameters);
-			
-			foreach ($sth->fetchAll() as $fl)
-			{ 
-				$agents[$fl['id']]->fields[$fl['field_type']] = $fl['f_value'];
-			}
-		}
-		return $agents;
+		return $articles;
 	}
 	
    function GetAll(){
+	  return $this->GetByParameters();
+   }
+   
+   function GetByCategory($category, $subCategory = null){
+	   
+	  $parameters = array(':category' => $category );
+	  
+	  if (!is_null($subCategory))
+		  $parameters[':subcategory'] = $subCategory;
+	  
 	  return $this->GetByParameters();
    }
 	
@@ -88,6 +94,7 @@ class EmployeeRepository extends BaseRepository {
 	   }
    }
 }
+
 
 
 ?>

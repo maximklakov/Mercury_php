@@ -2,11 +2,12 @@
 namespace Classes;
 
 require_once __DIR__ . "/Repository/EmployeeRepository.php";
-//require_once __DIR__ . "/ArticleRepository.php";
+require_once __DIR__ . "/Repository/ArticleRepository.php";
 
-/* I know, that it is not single responsibility, so what? I need to do this as quick as possible ) */
+/* We just need Entity Endpoint */
 class Entites {	
 	private $employeeRepo;
+	private $ArticleRepo;
 	
 	private $database;
 	
@@ -31,30 +32,24 @@ class Entites {
 			$this->domain = -1;
 		}
 		
-		if (class_exists('\\Repository\\EmployeeRepository')) {$this->employeeRepo = new \Repository\EmployeeRepository($this->database);}
-		//if (class_exists('ArticleRepository')) { $employeeRepo = new EmployeeRepository($this->database);}
+		if (class_exists('\\Repository\\EmployeeRepository')) { $this->employeeRepo = new \Repository\EmployeeRepository($this->database);}
+		if (class_exists('\\Repository\\ArticleRepository'))  { $this->ArticleRepo = new \Repository\ArticleRepository($this->database);}
    }
 	
 		function GetAllAgents(){
-
-		if (!is_null($this->employeeRepo)){
-			return $this->employeeRepo->GetAll();
+			if (!is_null($this->employeeRepo)){
+				return $this->employeeRepo->GetAll();
+			}
+		// TODO: some logging would be nice
+		  return null;
 		}
 		
-		$sql = 'Select First_Name, Last_Name, Id, guid from main.agents where Domain_Id = :domain';
-		$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
-		$sth->execute(array(':domain' => $this->domain));
-		
-		$agents = $sth->fetchAll();
-				
-		$sql = 'select af.f_value, ft.field_type, a.id  from main.field_types ft 
-					inner join main.agent_fields af on af.field_type_id = ft.id 
-					inner join main.agents a on a.id = af.agent_id
-				where a.domain_id=:domain';
-		$sth = $this->database->prepare($sql, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
-		$sth->execute(array(':domain' => $this->domain));
-		
-		
+		function GetArticlesByCategory($category, $subCategory = null){
+			if (!is_null($this->ArticleRepo)){
+				return $this->ArticleRepo->GetByCategory($category, $subCategory);
+			}
+		// TODO: some logging would be nice
+		  return null;
 		}
 }
 

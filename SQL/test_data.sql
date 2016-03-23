@@ -37,4 +37,24 @@ INSERT INTO main.agent_fields(id, agent_id, field_type_id, f_value)
 	
 INSERT INTO main.agent_fields(id, agent_id, field_type_id, f_value)
     VALUES (5, 1, 2, 'https://www.facebook.com/100002635164478');	
+	
+	
+	
+INSERT INTO main.articles(
+            name, category, subcategory, picture, date1, date2, text1, 
+            text2, article_text, domain_id, order_value)
+    VALUES ('sales', 'services', null, 'shopping-cart', null, null, 'Продаж',
+	'null', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.', 1, 1);
+	
+INSERT INTO main.articles(
+            name, category, subcategory, picture, date1, date2, text1, 
+            text2, article_text, domain_id, order_value)
+    VALUES ('advertisement', 'services', null, 'laptop', null, null, 'Реклама',
+	'null', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.', 1, 2);
+	
+INSERT INTO main.articles(
+            name, category, subcategory, picture, date1, date2, text1, 
+            text2, article_text, domain_id, order_value)
+    VALUES ('guard', 'services', null, 'lock', null, null, 'Супровід',
+	'null', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.', 1, 3);
 

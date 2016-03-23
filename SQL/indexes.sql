@@ -1,0 +1,1 @@
+CREATE INDEX client_first_name ON main.clients (name varchar_pattern_ops);

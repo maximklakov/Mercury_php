@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS main;
 
 --- Drop All
 
@@ -21,6 +22,9 @@ Drop Table IF EXISTS main.reset_tokens cascade;
 Drop Table IF EXISTS main.user_devices cascade;
 Drop Table IF EXISTS main.domains cascade;
 Drop Table IF EXISTS main.languages cascade;
+Drop Table IF EXISTS main.articles cascade;
+
+
 
 
 /*******************************************-=[ languages ]=-*******************************************/
@@ -37,6 +41,7 @@ Drop Table IF EXISTS main.languages cascade;
 
 	ALTER SEQUENCE main.language_id_seq OWNED BY main.languages.id;
 /*******************************************-=[ /languages ]=-*******************************************/
+
 
 /*******************************************-=[ domains ]=-*******************************************/
 	CREATE SEQUENCE main.domain_id_seq MINVALUE 5;
@@ -55,14 +60,36 @@ Drop Table IF EXISTS main.languages cascade;
 	ALTER SEQUENCE main.domain_id_seq OWNED BY main.domains.id;
 /*******************************************-=[ /domains ]=-*******************************************/
 
+/*******************************************-=[ articles ]=-*******************************************/
+	CREATE SEQUENCE main.articles_id_seq MINVALUE 5;
+	
+	CREATE TABLE IF NOT EXISTS  main.articles(
+			Id INT primary key default nextval('main.articles_id_seq'),
+			name VARCHAR(50),
+			guid uuid,
+			Domain_Id INT not null, 
+			category VARCHAR(50),
+			subcategory VARCHAR(50),
+			picture VARCHAR(255),
+			date1 date,
+			date2 date,
+			text1 VARCHAR(500),
+			text2 VARCHAR(500),
+			article_text text,
+			order_value int not null default 0
+		);
+		
+	ALTER TABLE main.articles ADD CONSTRAINT FK_article_Domain foreign key (Domain_Id) references main.Domains (Id);	
+	ALTER SEQUENCE main.articles_id_seq OWNED BY main.articles.id;
+/*******************************************-=[ articles ]=-*******************************************/
 
 /*******************************************-=[ logins ]=-*******************************************/
 	CREATE SEQUENCE main.login_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.logins(
-			guid uuid,
 			Id INT primary key default nextval('main.login_id_seq'),
 			username VARCHAR(50),
+			guid uuid,
 			eMail VARCHAR(50),
 			password varchar(64) NOT NULL,
 			password_salt varchar(20) NOT NULL,
@@ -101,12 +128,11 @@ Drop Table IF EXISTS main.languages cascade;
 	CREATE SEQUENCE main.agent_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.agents(
-			Guid uuid,
 			Id INT primary key default nextval('main.agent_id_seq'),
+			Name VARCHAR(50) not null,
 			Domain_Id INT not null,
 			Login_Id INT not null,
-			First_Name VARCHAR(50) not null,
-			Last_Name VARCHAR(50),
+			Guid uuid,
 			EMail VARCHAR(50) not null,
 			Phone VARCHAR(50) not null,
 			Status SMALLINT not null default 0,
@@ -152,8 +178,8 @@ Drop Table IF EXISTS main.languages cascade;
 			Resource_Type char(1),  -- D = Domain, U = Agent Name, L = Lang, O = Object type, C = City, R = Region, T = Text, F = Flat_Type, M = Material
 			Lang_Id INT not null default 0,
 			Domain_Id INT not null default 0, --- If no localisation for current domain - use default
-			Local_Text VARCHAR(4000) not null,
-			Short_text VARCHAR(5) not null
+			Local_Text VARCHAR(250) not null,
+			Short_text VARCHAR(25) not null
 		);
 
 
@@ -198,9 +224,10 @@ Drop Table IF EXISTS main.languages cascade;
 	CREATE SEQUENCE main.city_id_seq MINVALUE 5;
 
 	CREATE TABLE IF NOT EXISTS  main.cities (
-		Id INT primary key default nextval('main.city_id_seq'),
+			Id INT primary key default nextval('main.city_id_seq'),
 			City_Name VARCHAR(50) not null,
-			City_Short_Name VARCHAR(5) not null
+			City_Short_Name VARCHAR(5) not null,
+			Guid uuid
 		);
 
 	INSERT INTO main.cities(Id, City_Name, City_Short_Name) values (1, 'Вінниця', 'Вн');
@@ -215,7 +242,8 @@ Drop Table IF EXISTS main.languages cascade;
 			Id INT primary key default nextval('main.region_id_seq'),
 			City_Id INT not null,
 			Region_Name VARCHAR(50) not null,
-			Region_Description VARCHAR(500)
+			Region_Description VARCHAR(500),
+			Guid uuid
 		);
 
 	ALTER TABLE main.regions ADD CONSTRAINT FK_Reg_City foreign key (City_Id) references main.Cities(Id);
@@ -230,7 +258,8 @@ Drop Table IF EXISTS main.languages cascade;
 			Id INT primary key default nextval('main.street_id_seq'),
 			Region_Id INT not null,
 			Street_Name VARCHAR(50) not null,
-			Street_Description VARCHAR(500)
+			Street_Description VARCHAR(500),
+			Guid uuid
 		);
 
 	ALTER TABLE main.streets ADD CONSTRAINT FK_Street_Region foreign key (Region_Id) references main.Regions(Id);
@@ -268,6 +297,9 @@ Drop Table IF EXISTS main.languages cascade;
 		---- All Areas is in square meters
 	CREATE TABLE IF NOT EXISTS  main.objects(
 		Id INT primary key default nextval('main.object_id_seq'),
+		Short_Description VARCHAR(500),
+		Full_Description VARCHAR(4000),
+		Guid uuid,
 		Domain_Id INT not null,
 		Agent_Id INT not null,
 		Phone_Id INT,
@@ -289,8 +321,6 @@ Drop Table IF EXISTS main.languages cascade;
 		Building_Type_Id  SMALLINT, -- material
 		HasPhone SMALLINT,
 		Orienter VARCHAR(200),
-		Short_Description VARCHAR(500),
-		Full_Description VARCHAR(4000),
 		Price float,
 		Contacts VARCHAR(500),
 		tel1 VARCHAR(30),
@@ -313,10 +343,10 @@ Drop Table IF EXISTS main.languages cascade;
 
 	CREATE TABLE IF NOT EXISTS  main.clients(
 			Id INT primary key default nextval('main.client_id_seq'),
+			Name  VARCHAR(50),
+			Guid uuid,
 			Domain_Id INT not null,
 			Agent_Id INT not null,
-			Last_Name  VARCHAR(50),
-			First_Name  VARCHAR(50),
 			Mid_Name VARCHAR(50),
 			Birth_Date Date,
 			Client_Type SMALLINT, -- 1 - Byer, 2 - Seller, 3- Both, 4 - Rent(look), 5- Rent(give)
