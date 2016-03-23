@@ -27,6 +27,10 @@ class LngENG {
 	public $YourMessage = "your message";
 	public $PleaseEnter = "Please enter";
 	public $SendMessage = "Send Message";
+	public $Address = "Soborna Street, 26, Vinnytsia";
+	public $CallUs = "Call Us";
+	
+	
 	
 	public $Copyright = "Copyright &copy; 121 Real Estate";
 	

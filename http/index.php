@@ -241,67 +241,36 @@ This theme is an open source project, and we don't have any copyrights on it
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="timeline">
-                        <li>
+	<?php 
+			$articles = $_E->GetArticlesByCategory('history');
+			
+			$i = 0;
+			
+			foreach ($articles as $ar)
+			{
+	?>	
+	                    <li <?=($i%2 ? '' : 'class="timeline-inverted"')?> >
                             <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
+                                <img class="img-circle img-responsive" src="<?=$ar->picture?>" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2009-2011</h4>
-                                    <h4 class="subheading">Our Humble Beginnings</h4>
+                                    <h4><?=$ar->shortText1?></h4>
+                                    <h4 class="subheading"><?=$ar->shortText2?></h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                                    <p class="text-muted"><?=$ar->fullText?></p>
                                 </div>
                             </div>
                         </li>
-                        <li class="timeline-inverted">
+<?php 
+				$i++;
+			}
+?>                        <li class="timeline-inverted">
                             <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/2.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>March 2011</h4>
-                                    <h4 class="subheading">An Agency is Born</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/3.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>December 2012</h4>
-                                    <h4 class="subheading">Transition to Full Service</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/4.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>July 2014</h4>
-                                    <h4 class="subheading">Phase Two Expansion</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                <h4>Be Part
-                                    <br>Of Our
-                                    <br>Story!</h4>
+                                <h4>Станьте
+                                    <br>Частиною
+                                    <br>Історії !</h4>
                             </div>
                         </li>
                     </ul>
@@ -393,47 +362,62 @@ This theme is an open source project, and we don't have any copyrights on it
     
     <!-- Contact Section -->
     <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading"><?=$_L->ContactUs?></h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="<?=$_L->YourName?> *" id="name" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourName?>.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="<?=$_L->YourEmail?> *" id="email" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourEmail?>.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group">
-                                    <input type="tel" class="form-control" placeholder="<?=$_L->YourPhone?> *" id="phone" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourPhone?>.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <textarea class="form-control" placeholder="<?=$_L->YourMessage?> *" id="message" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourMessage?>."></textarea>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-lg-12 text-center">
-                                <div id="success"></div>
-                                <button type="submit" class="btn btn-xl"><?=$_L->SendMessage?></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+		<!-- contact -->
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading"><?=$_L->ContactUs?></h2>
+						<h3 class="section-subheading text-muted address"><ul>
+							<li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i><?=$_L->Address?></li>
+							<li><i class="phon"><?=$_L->CallUs?> :</i> +0955 670 204</li>
+							<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com"> mail@example.com</a></li>
+						</ul>
+						</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="contact-grids">
+						<div class="col-md-6 contact-grid">  
+						<iframe src="https://www.google.com/maps/embed/v1/place?q=28%20Soborna%20Street,%20Vinnytsia,%20UA&zoom=17&key=AIzaSyBP7wCjZBNKkHqIUuXd9s0I8qAe2ErOQFE">  </iframe>
+						</div>
+						<div class="col-md-6 contact-grid">
+							<div class="row">
+								<div class="col-lg-12">
+									<form name="sentMessage" id="contactForm" novalidate>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="<?=$_L->YourName?> *" id="name" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourName?>.">
+													<p class="help-block text-danger"></p>
+												</div>
+												<div class="form-group">
+													<input type="email" class="form-control" placeholder="<?=$_L->YourEmail?> *" id="email" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourEmail?>.">
+													<p class="help-block text-danger"></p>
+												</div>
+												<div class="form-group">
+													<input type="tel" class="form-control" placeholder="<?=$_L->YourPhone?> *" id="phone" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourPhone?>.">
+													<p class="help-block text-danger"></p>
+												</div>
+												<div class="form-group">
+													<textarea class="form-control" placeholder="<?=$_L->YourMessage?> *" id="message" required data-validation-required-message="<?=$_L->PleaseEnter?> <?=$_L->YourMessage?>."></textarea>
+													<p class="help-block text-danger"></p>
+												</div>
+											</div>
+											<div class="col-lg-12 text-center">
+												<div id="success"></div>
+												<button type="submit" class="btn btn-xl"><?=$_L->SendMessage?></button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+
+				</div>
+			</div>
+	<!-- //contact -->
     </section>
 
     <footer>

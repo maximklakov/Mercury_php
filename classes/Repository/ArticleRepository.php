@@ -78,7 +78,7 @@ class ArticleRepository extends BaseRepository {
 	  if (!is_null($subCategory))
 		  $parameters[':subcategory'] = $subCategory;
 	  
-	  return $this->GetByParameters();
+	  return $this->GetByParameters($parameters);
    }
 	
    function GetByGuid(string $guid){

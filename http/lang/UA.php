@@ -19,7 +19,7 @@ class LangUkr {
 	
 	public $OurAmazingTeam = 'Наша Чарівна Команда';
 	
-	public $ContactUs = "Зв'язатись із нами";
+	public $ContactUs = "Зв'яжіться із нами";
 	
 	public $YourName = "ваше ім'я";
 	public $YourEmail = "ваш email";
@@ -27,6 +27,8 @@ class LangUkr {
 	public $YourMessage = "ваше повідомлення";
 	public $PleaseEnter = "Будь ласка введіть";
 	public $SendMessage = "Надіслати";
+	public $Address = "Агенство Нерухомості 121. вул. Соборна, 26, Вінниця";
+	public $CallUs = "Дзвоніть";
 	
 	public $Copyright = "Copyright &copy; 121 Real Estate";	
 }
