@@ -1,6 +1,9 @@
 <?php
-require_once("lang/UA.php");
 require_once("../classes/site.config.php");
+require_once("lang/lang.php");
+
+
+
 ?>
 
 <!DOCTYPE html>

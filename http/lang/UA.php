@@ -8,8 +8,8 @@ class LangUkr {
 	public $Contact = "Контакти";
 	public $MainTitle = "Агенція нерухомості 121 Real Estate";
 	
-	public $WelcomeToOurStudio = "Ласкаво просимо до нашого агенства!";
-	public $ItsNiceToMeetYou = "Приємно познайомитися";
+	public $WelcomeToOurStudio = "Чи можете ви знайти мені житло моєї мрії?";
+	public $ItsNiceToMeetYou = "ТАК, ЗАЛЮБКИ!";
 	public $TellMeMore = "Розкажіть мені більше";
 	
 	public $ServicesDescription = "Наша Команда фахівців завжди надасть Вам швидку та кваліфіковану допомогу";

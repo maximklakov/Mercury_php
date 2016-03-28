@@ -11,9 +11,10 @@ $_C = array(
   'pages' => array(
     'login_page' => '/auth/login.php',
     'home_page' => '/'
-  ),
-  'log' => array( 'name' => 'log.log'),
-  'domain' => 1
+  )
+  ,'log' => array( 'name' => 'log.log')
+  ,'domain' => 1
+  ,'default_language' => 'ua'
 );
 
 require_once __DIR__ . '/site.entities.php';
