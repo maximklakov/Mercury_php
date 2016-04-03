@@ -1,5 +1,5 @@
 
-INSERT INTO main.Domains (Id, Domain_Name, Default_Lang_Id) values (1, '121 RE', 0);
+INSERT INTO main.Domains (Id, Domain_Name, Default_Lang_Id) values (1, '121 RE', 804);
 
 
 INSERT INTO main.agents(

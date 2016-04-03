@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS main;
 
 --- Drop All
-
+/*
 Drop Table IF EXISTS main.objects cascade;
 Drop Table IF EXISTS main.materials cascade;
 Drop Table IF EXISTS main.flat_Types cascade;
@@ -24,7 +24,7 @@ Drop Table IF EXISTS main.domains cascade;
 Drop Table IF EXISTS main.languages cascade;
 Drop Table IF EXISTS main.articles cascade;
 
-
+*/
 
 
 /*******************************************-=[ languages ]=-*******************************************/
@@ -37,7 +37,7 @@ Drop Table IF EXISTS main.articles cascade;
 			Full_name VARCHAR(50)		
 		);
 
-	INSERT INTO main.Languages (Id, Shortest_Name, Short_Name, Full_name) values (0, 'UA', 'UKR', 'Українська');
+	INSERT INTO main.Languages (Id, Shortest_Name, Short_Name, Full_name) values (804, 'UA', 'UKR', 'Українська');
 
 	ALTER SEQUENCE main.language_id_seq OWNED BY main.languages.id;
 /*******************************************-=[ /languages ]=-*******************************************/
@@ -49,7 +49,7 @@ Drop Table IF EXISTS main.articles cascade;
 	CREATE TABLE IF NOT EXISTS  main.domains(
 			Id INT primary key default nextval('main.domain_id_seq'),
 			Domain_Name VARCHAR(50) not null,
-			Default_Lang_Id INT not null default 0,
+			Default_Lang_Id INT not null default 804,
 			site_domain_name  VARCHAR(50)
 		);
 
@@ -68,6 +68,7 @@ Drop Table IF EXISTS main.articles cascade;
 			name VARCHAR(50),
 			guid uuid,
 			Domain_Id INT not null, 
+			Lang_Id INT not null default 804,
 			category VARCHAR(50),
 			subcategory VARCHAR(50),
 			picture VARCHAR(255),
@@ -82,6 +83,23 @@ Drop Table IF EXISTS main.articles cascade;
 	ALTER TABLE main.articles ADD CONSTRAINT FK_article_Domain foreign key (Domain_Id) references main.Domains (Id);	
 	ALTER SEQUENCE main.articles_id_seq OWNED BY main.articles.id;
 /*******************************************-=[ articles ]=-*******************************************/
+
+/*******************************************-=[ phrases ]=-*******************************************/
+	CREATE SEQUENCE main.phrases_id_seq MINVALUE 5;
+	
+	CREATE TABLE IF NOT EXISTS  main.phrases(
+			Id INT primary key default nextval('main.phrases_id_seq'),
+			name VARCHAR(50),
+			Domain_Id INT not null,
+			Lang_Id INT not null default 804,
+			category VARCHAR(50),
+			subcategory VARCHAR(50),
+			text VARCHAR(250)
+		);
+		
+	ALTER TABLE main.phrases ADD CONSTRAINT FK_phrase_Domain foreign key (Domain_Id) references main.Domains (Id);	
+	ALTER SEQUENCE main.phrases_id_seq OWNED BY main.phrases.id;
+/*******************************************-=[ phrases ]=-*******************************************/
 
 /*******************************************-=[ logins ]=-*******************************************/
 	CREATE SEQUENCE main.login_id_seq MINVALUE 5;
@@ -176,7 +194,7 @@ Drop Table IF EXISTS main.articles cascade;
 			Id INT primary key default nextval('main.localisation_id_seq'),
 			Resource_Id INT not null, -- Domain, Agent, Object, etc... Id
 			Resource_Type char(1),  -- D = Domain, U = Agent Name, L = Lang, O = Object type, C = City, R = Region, T = Text, F = Flat_Type, M = Material
-			Lang_Id INT not null default 0,
+			Lang_Id INT not null default 804,
 			Domain_Id INT not null default 0, --- If no localisation for current domain - use default
 			Local_Text VARCHAR(250) not null,
 			Short_text VARCHAR(25) not null
