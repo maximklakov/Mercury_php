@@ -2,16 +2,13 @@
 require_once("../classes/site.config.php");
 require_once("lang/lang.php");
 
-
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?=$_L->ShortCode?>">
 
 <head>
 <!--
-
 This theme is an open source project, and we don't have any copyrights on it
 
 [Agency](http://startbootstrap.com/template-overviews/agency/) is a one page agency portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, a responsive timeline, and a working PHP contact form.
@@ -72,9 +69,9 @@ This theme is an open source project, and we don't have any copyrights on it
                     <li>
                         <a class="page-scroll" href="#services"><?=$_L->Services?></a>
                     </li>
-                    <li>
+                    <!-- li>
                         <a class="page-scroll" href="#portfolio"><?=$_L->Portfolio?></a>
-                    </li>
+                    </li -->
                     <li>
                         <a class="page-scroll" href="#about"><?=$_L->About?></a>
                     </li>
@@ -84,6 +81,14 @@ This theme is an open source project, and we don't have any copyrights on it
                     <li>
                         <a class="page-scroll" href="#contact"><?=$_L->Contact?></a>
                     </li>
+					<li>
+						<?php 
+						foreach ($lang_icons as $l )
+						{
+							echo "<a style='padding:9px;' href=\"?lang={$l}\"><img class=\"img-responsive\" src=\"/img/{$l}.png\" /></a>";
+						}
+						?>
+					</li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -136,6 +141,7 @@ This theme is an open source project, and we don't have any copyrights on it
 
     <!-- Portfolio Grid Section -->
     <section id="portfolio" class="bg-light-gray">
+	<!--
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -230,6 +236,7 @@ This theme is an open source project, and we don't have any copyrights on it
                 </div>
             </div>
         </div>
+		-->
     </section>
 
     <!-- About Section -->
@@ -288,7 +295,7 @@ This theme is an open source project, and we don't have any copyrights on it
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading"><?=$_L->OurAmazingTeam?></h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted">Наша Команда фахівців завжди надасть Вам швидку та кваліфіковану допомогу.</h3>
                 </div>
             </div>
             <div class="row">
@@ -329,14 +336,14 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+                    <p class="large text-muted">Ви можете завжди розраховувати на нас.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Clients Aside -->
-    <aside class="clients">
+    <!-- aside class="clients">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -361,7 +368,7 @@ This theme is an open source project, and we don't have any copyrights on it
                 </div>
             </div>
         </div>
-    </aside>
+    </aside -->
     
     <!-- Contact Section -->
     <section id="contact">
@@ -372,8 +379,8 @@ This theme is an open source project, and we don't have any copyrights on it
 						<h2 class="section-heading"><?=$_L->ContactUs?></h2>
 						<h3 class="section-subheading text-muted address"><ul>
 							<li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i><?=$_L->Address?></li>
-							<li><i class="phon"><?=$_L->CallUs?> :</i> +0955 670 204</li>
-							<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com"> mail@example.com</a></li>
+							<li><i class="phon"><?=$_L->CallUs?> :</i> +38 (096) 564-2440</li>
+							<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:contact@estate.vn.ua">contact@estate.vn.ua</a></li>
 						</ul>
 						</h3>
 					</div>
@@ -435,7 +442,7 @@ This theme is an open source project, and we don't have any copyrights on it
                         </li>
                         <li><a href="#"><i class="fa fa-facebook"></i></a>
                         </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        <li><a href="http://vk.com/public113168845"><i class="fa fa-vk"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -454,7 +461,7 @@ This theme is an open source project, and we don't have any copyrights on it
     <!-- Portfolio Modals -->
     <!-- Use the modals below to showcase details about your portfolio projects! -->
 
-    <!-- Portfolio Modal 1 -->
+<!--
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -467,7 +474,6 @@ This theme is an open source project, and we don't have any copyrights on it
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                             <img class="img-responsive img-centered" src="img/portfolio/roundicons-free.png" alt="">
@@ -486,8 +492,6 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
         </div>
     </div>
-
-    <!-- Portfolio Modal 2 -->
     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -512,8 +516,6 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
         </div>
     </div>
-
-    <!-- Portfolio Modal 3 -->
     <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -526,7 +528,6 @@ This theme is an open source project, and we don't have any copyrights on it
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                             <img class="img-responsive img-centered" src="img/portfolio/treehouse-preview.png" alt="">
@@ -539,8 +540,6 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
         </div>
     </div>
-
-    <!-- Portfolio Modal 4 -->
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -553,7 +552,6 @@ This theme is an open source project, and we don't have any copyrights on it
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                             <img class="img-responsive img-centered" src="img/portfolio/golden-preview.png" alt="">
@@ -566,8 +564,6 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
         </div>
     </div>
-
-    <!-- Portfolio Modal 5 -->
     <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -580,7 +576,6 @@ This theme is an open source project, and we don't have any copyrights on it
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                             <img class="img-responsive img-centered" src="img/portfolio/escape-preview.png" alt="">
@@ -593,8 +588,6 @@ This theme is an open source project, and we don't have any copyrights on it
             </div>
         </div>
     </div>
-
-    <!-- Portfolio Modal 6 -->
     <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -607,7 +600,6 @@ This theme is an open source project, and we don't have any copyrights on it
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                             <img class="img-responsive img-centered" src="img/portfolio/dreams-preview.png" alt="">
@@ -619,8 +611,8 @@ This theme is an open source project, and we don't have any copyrights on it
                 </div>
             </div>
         </div>
-    </div>
-
+    </div >
+-->
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 

@@ -1,6 +1,8 @@
 <?php
 
 class LangUkr {
+	public $ShortCode = "ua";
+	
 	public $Services = "Сервіси";
 	public $Portfolio = "Портфоліо";
 	public $About = "Про нас";
@@ -27,7 +29,7 @@ class LangUkr {
 	public $YourMessage = "ваше повідомлення";
 	public $PleaseEnter = "Будь ласка введіть";
 	public $SendMessage = "Надіслати";
-	public $Address = "Агенство Нерухомості 121. вул. Соборна, 26, Вінниця";
+	public $Address = "Агенство Нерухомості 121. вул. Соборна, 28, Вінниця";
 	public $CallUs = "Дзвоніть";
 	
 	public $Copyright = "Copyright &copy; 121 Real Estate";	

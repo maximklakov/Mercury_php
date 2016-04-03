@@ -1,5 +1,6 @@
 <?php
 class LngENG {
+	public $ShortCode = "en";
 	
 	public $Services = "Services";
 	public $Portfolio = "Portfolio";
@@ -27,7 +28,7 @@ class LngENG {
 	public $YourMessage = "your message";
 	public $PleaseEnter = "Please enter";
 	public $SendMessage = "Send Message";
-	public $Address = "Soborna Street, 26, Vinnytsia";
+	public $Address = "Soborna Street, 28, Vinnytsia";
 	public $CallUs = "Call Us";
 	
 	
