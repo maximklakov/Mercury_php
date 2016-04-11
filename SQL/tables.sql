@@ -55,7 +55,7 @@ Drop Table IF EXISTS main.articles cascade;
 
 	ALTER TABLE main.Domains ADD CONSTRAINT FK_Domain_Lang foreign key (Default_Lang_Id) references main.Languages (Id);
 
-	INSERT INTO main.Domains (Id, Domain_Name, Default_Lang_Id) values (0, '[Default]', 0);
+	INSERT INTO main.Domains (Id, Domain_Name, Default_Lang_Id) values (0, '[Default]', 804);
 	
 	ALTER SEQUENCE main.domain_id_seq OWNED BY main.domains.id;
 /*******************************************-=[ /domains ]=-*******************************************/
