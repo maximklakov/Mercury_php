@@ -93,8 +93,11 @@
             $currentPageCaption = $this->GetShortCaption();
             $result = new PageList($this);
             $result->AddGroup($this->RenderText('Default'));
+			if (GetCurrentUserGrantForDataSource('Pictures')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Pictures'), 'index.php', $this->RenderText('Pictures'), $currentPageCaption == $this->RenderText('Pictures'), false, $this->RenderText('Default')));
+			
             if (GetCurrentUserGrantForDataSource('main.articles')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Articles'), 'articles.php', $this->RenderText('Main.Articles'), $currentPageCaption == $this->RenderText('Articles'), false, $this->RenderText('Default')));
+                $result->AddPage(new PageLink($this->RenderText('Articles'), 'articles.php', $this->RenderText('Main.Articles'), $currentPageCaption == $this->RenderText('Articles'), true, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('main.agents')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Agents'), 'agents.php', $this->RenderText('Main.Agents'), $currentPageCaption == $this->RenderText('Agents'), false, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('main.agent_fields')->HasViewGrant())
@@ -109,6 +112,9 @@
                 $result->AddPage(new PageLink($this->RenderText('Domains'), 'domains.php', $this->RenderText('Main.Domains'), $currentPageCaption == $this->RenderText('Domains'), false, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('main.phrases')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Phrases'), 'phrases.php', $this->RenderText('Main.Phrases'), $currentPageCaption == $this->RenderText('Phrases'), false, $this->RenderText('Default')));
+			
+			if (GetCurrentUserGrantForDataSource('Logout')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Logout'), 'index.php?logout', $this->RenderText('Logout'), $currentPageCaption == $this->RenderText('Logout'), true, $this->RenderText('Default')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() ) {
               $result->AddGroup('Admin area');

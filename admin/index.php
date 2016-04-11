@@ -2694,61 +2694,65 @@ if(isset($_ERROR) && strlen($_ERROR) > 0)
 					<div class="sidebar-nav">
 						<ul class="nav nav-list pg-page-list">
 
-							<li class="nav-header">Список страниц</li>
-							<li class="active">
-								<a href="#" title="Main.Agent Fields" onclick="return false;" style="cursor: default;">
-									<i class="page-list-icon"></i>
-									Pictures
-								</a>
-							</li>
-							<li class="divider"></li>
+                                    <li class="nav-header">Список страниц</li>
 
-							<li><a href="articles.php" title="Main.Articles">
-									<i class="page-list-icon"></i>
-									Articles
-								</a></li>
+                                            <li  class="active"><a href="#" onclick="return false;" style="cursor: default;" title="Pictures">
+                            <i class="page-list-icon"></i>
+                            Pictures
+                        </a></li>
 
-							<li><a href="agents.php" title="Main.Agents">
-									<i class="page-list-icon"></i>
-									Agents
-								</a></li>
+                                            <li class="divider"></li>
+                    
+                                            <li>
+                            <a href="articles.php" title="Main.Articles" >
+                                <i class="page-list-icon"></i>
+                                Articles
+                                                            </a>
+                        </li>
 
-							<li>
-								<a href="#" title="Main.Agent Fields" onclick="return false;" style="cursor: default;">
-									<i class="page-list-icon"></i>
-									Agent Fields
-								</a>
-							</li>
+                                            <li><a href="agents.php" title="Main.Agents">
+                            <i class="page-list-icon"></i>
+                            Agents
+                        </a></li>
 
-							<li class="divider"></li>
+                                            <li><a href="agent_fields.php" title="Main.Agent Fields">
+                            <i class="page-list-icon"></i>
+                            Agent Fields
+                        </a></li>
 
-							<li><a href="field_types.php" title="Main.Field Types">
-									<i class="page-list-icon"></i>
-									Field Types
-								</a></li>
+                                            <li class="divider"></li>
+                    
+                                            <li><a href="field_types.php" title="Main.Field Types">
+                            <i class="page-list-icon"></i>
+                            Field Types
+                        </a></li>
 
-							<li><a href="logins.php" title="Main.Logins">
-									<i class="page-list-icon"></i>
-									Logins
-								</a></li>
+                                            <li><a href="logins.php" title="Main.Logins">
+                            <i class="page-list-icon"></i>
+                            Logins
+                        </a></li>
 
-							<li><a href="languages.php" title="Main.Languages">
-									<i class="page-list-icon"></i>
-									Languages
-								</a></li>
+                                            <li><a href="languages.php" title="Main.Languages">
+                            <i class="page-list-icon"></i>
+                            Languages
+                        </a></li>
 
-							<li><a href="domains.php" title="Main.Domains">
-									<i class="page-list-icon"></i>
-									Domains
-								</a></li>
+                                            <li><a href="domains.php" title="Main.Domains">
+                            <i class="page-list-icon"></i>
+                            Domains
+                        </a></li>
 
-							<li><a href="phrases.php" title="Main.Phrases">
-									<i class="page-list-icon"></i>
-									Phrases
-								</a></li>
+                                            <li><a href="phrases.php" title="Main.Phrases">
+                            <i class="page-list-icon"></i>
+                            Phrases
+                        </a></li>
 
-
-
+                                            <li class="divider"></li>
+                    
+                                            <li><a href="index.php?logout" title="Logout">
+                            <i class="page-list-icon"></i>
+                            Logout
+                        </a></li>
 
 						</ul>
 					</div>
