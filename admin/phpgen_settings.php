@@ -31,14 +31,16 @@ function GetPageGroups()
 function GetPageInfos()
 {
     $result = array();
-    $result[] = array('caption' => 'Articles', 'short_caption' => 'Main.Articles', 'filename' => 'articles.php', 'name' => 'main.articles', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => 'Pictures', 'short_caption' => 'Pictures', 'filename' => 'index.php', 'name' => 'Pictures', 'group_name' => 'Default', 'add_separator' => true);
+	$result[] = array('caption' => 'Articles', 'short_caption' => 'Main.Articles', 'filename' => 'articles.php', 'name' => 'main.articles', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Agents', 'short_caption' => 'Main.Agents', 'filename' => 'agents.php', 'name' => 'main.agents', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Agent Fields', 'short_caption' => 'Main.Agent Fields', 'filename' => 'agent_fields.php', 'name' => 'main.agent_fields', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Field Types', 'short_caption' => 'Main.Field Types', 'filename' => 'field_types.php', 'name' => 'main.field_types', 'group_name' => 'Default', 'add_separator' => true);
     $result[] = array('caption' => 'Logins', 'short_caption' => 'Main.Logins', 'filename' => 'logins.php', 'name' => 'main.logins', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Languages', 'short_caption' => 'Main.Languages', 'filename' => 'languages.php', 'name' => 'main.languages', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Domains', 'short_caption' => 'Main.Domains', 'filename' => 'domains.php', 'name' => 'main.domains', 'group_name' => 'Default', 'add_separator' => false);
-    $result[] = array('caption' => 'Phrases', 'short_caption' => 'Main.Phrases', 'filename' => 'phrases.php', 'name' => 'main.phrases', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => 'Phrases', 'short_caption' => 'Main.Phrases', 'filename' => 'phrases.php', 'name' => 'main.phrases', 'group_name' => 'Default', 'add_separator' => true);
+	$result[] = array('caption' => 'Logout', 'short_caption' => 'Logout', 'filename' => 'index.php?logout', 'name' => 'Logout', 'group_name' => 'Default', 'add_separator' => false);
     return $result;
 }
 

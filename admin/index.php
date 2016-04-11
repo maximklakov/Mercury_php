@@ -1726,6 +1726,7 @@ class FileManager
 	*/
 	function newFolder($location, $dirname)
 	{
+		global $_CONFIG;
 		global $encodeExplorer;
 		if(strlen($dirname) > 0)
 		{
@@ -1745,12 +1746,12 @@ class FileManager
 				// The target directory is not writable
 				$encodeExplorer->setErrorString("upload_dir_not_writable");
 			}
-			else if(!mkdir($location->getDir(true, false, false, 0).$dirname, EncodeExplorer::getConfig("new_dir_mode")))
+			else if(!mkdir($_CONFIG['basedir'].$location->getDir(true, false, false, 0).$dirname, EncodeExplorer::getConfig("new_dir_mode")))
 			{
 				// Error creating a new directory
 				$encodeExplorer->setErrorString("new_dir_failed");
 			}
-			else if(!chmod($location->getDir(true, false, false, 0).$dirname, EncodeExplorer::getConfig("new_dir_mode")))
+			else if(!chmod($_CONFIG['basedir'].$location->getDir(true, false, false, 0).$dirname, EncodeExplorer::getConfig("new_dir_mode")))
 			{
 				// Error applying chmod
 				$encodeExplorer->setErrorString("chmod_dir_failed");
@@ -2175,7 +2176,12 @@ class Location
 
 	function isWritable()
 	{
-		return is_writable($this->getDir(true, false, false, 0));
+		if (is_dir($this->getDir(true, false, false, 0))) return is_writable($this->getDir(true, false, false, 0));
+		
+		global $_CONFIG;
+		
+		if (is_dir($_CONFIG['basedir'] . $this->getDir(true, false, false, 0))) return is_writable($_CONFIG['basedir'] . $this->getDir(true, false, false, 0));
+		
 	}
 
 	public static function isDirWritable($dir)
@@ -2560,6 +2566,19 @@ class EncodeExplorer
 <head>
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=<?php print $this->getConfig('charset'); ?>">
+	<meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10">
+	<title>Pictures</title>
+
+	<link rel="stylesheet" type="text/css" href="components/css/main.css" />
+
+	<script src="components/js/jquery/jquery.min.js"></script>
+	<script src="components/js/libs/amplify.store.js"></script>
+	<script src="components/js/bootstrap/bootstrap.js"></script>
+
+	<script type="text/javascript" src="components/js/require-config.js"></script>
+	<script type="text/javascript" src="components/js/user.js"></script>
+
+
 <?php css(); ?>
 <!-- <meta charset="<?php print $this->getConfig('charset'); ?>" /> -->
 <?php
@@ -2652,232 +2671,391 @@ if(isset($_ERROR) && strlen($_ERROR) > 0)
 	print "<div id=\"error\">".$_ERROR."</div>";
 }
 ?>
+	<div class="navbar" id="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class="pull-left"></div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+		  <div class="span3 expanded" id="side-bar">
+		  <?php 
+		  if(GateKeeper::isAccessAllowed())
+				{
+					
+						  
+		  ?>
+			<div class="sidebar-nav-fixed">
+				<a href="#" class="close" style="margin: 4px 4px 0 0"><i class="icon-chevron-left"></i></a>
+				<div class="content">
+					<div class="sidebar-nav">
+						<ul class="nav nav-list pg-page-list">
+
+							<li class="nav-header">Список страниц</li>
+							<li class="active">
+								<a href="#" title="Main.Agent Fields" onclick="return false;" style="cursor: default;">
+									<i class="page-list-icon"></i>
+									Pictures
+								</a>
+							</li>
+							<li class="divider"></li>
+
+							<li><a href="articles.php" title="Main.Articles">
+									<i class="page-list-icon"></i>
+									Articles
+								</a></li>
+
+							<li><a href="agents.php" title="Main.Agents">
+									<i class="page-list-icon"></i>
+									Agents
+								</a></li>
+
+							<li>
+								<a href="#" title="Main.Agent Fields" onclick="return false;" style="cursor: default;">
+									<i class="page-list-icon"></i>
+									Agent Fields
+								</a>
+							</li>
+
+							<li class="divider"></li>
+
+							<li><a href="field_types.php" title="Main.Field Types">
+									<i class="page-list-icon"></i>
+									Field Types
+								</a></li>
+
+							<li><a href="logins.php" title="Main.Logins">
+									<i class="page-list-icon"></i>
+									Logins
+								</a></li>
+
+							<li><a href="languages.php" title="Main.Languages">
+									<i class="page-list-icon"></i>
+									Languages
+								</a></li>
+
+							<li><a href="domains.php" title="Main.Domains">
+									<i class="page-list-icon"></i>
+									Domains
+								</a></li>
+
+							<li><a href="phrases.php" title="Main.Phrases">
+									<i class="page-list-icon"></i>
+									Phrases
+								</a></li>
+
+
+
+
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+			<?php
+				}
+			?>
+			<script>
+				$('.sidebar-nav-fixed').css('top',
+				Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
+				);
+				$('#navbar img').load(function() {
+				$('.sidebar-nav-fixed').css('top',
+				Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
+				);
+				});
+				$(window).scroll(function() {
+				$('.sidebar-nav-fixed').css('top',
+				Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
+				);
+				});
+				//$('#content').css('top', $('.navbar-fixed-top').height() + 10);
+				//$('#side-bar').css('top', $('.navbar-fixed-top').height() - 10);
+			</script>
+
+		</div>
+		<div class="span9" id="content-block">
+			<script>
+				var sideBarContainer = $('#side-bar');
+				var sidebar = $('#side-bar .sidebar-nav-fixed');
+				var toggleButton = sidebar.find('a.close');
+				var toggleButtonIcon = toggleButton.children('i');
+
+				function hideSideBar() {
+				sideBarContainer.removeClass('expanded');
+				sidebar.children('.content').hide();
+				sideBarContainer.width(20);
+				toggleButtonIcon.removeClass('icon-chevron-left');
+				toggleButtonIcon.addClass('icon-chevron-right');
+				$('#content-block').css('left', 0);
+				$('#content-block').addClass('span10');
+				$('#content-block').removeClass('span9');
+				}
+
+				function showSideBar() {
+				sideBarContainer.addClass('expanded');
+				sidebar.children('.content').show();
+				sideBarContainer.width(240);
+				toggleButtonIcon.addClass('icon-chevron-left');
+				toggleButtonIcon.removeClass('icon-chevron-right');
+				$('#content-block').css('left', 240);
+				$('#content-block').removeClass('span10');
+				$('#content-block').addClass('span9');
+				}
+
+
+
+				if (amplify.store('side-bar-collapsed')) {
+				hideSideBar();
+				}
+
+
+
+
+				toggleButton.click(function(e) {
+				e.preventDefault();
+				if (sideBarContainer.hasClass('expanded')) {
+				hideSideBar();
+				amplify.store('side-bar-collapsed', true);
+				}
+				else {
+				showSideBar();
+				amplify.store('side-bar-collapsed', false);
+				}
+				});
+			</script>
+			<div class="page-header">
+				<h1>
+					Pictures
+				</h1>
+			</div>
+<div>
 <div id="frame">
-<?php
-if(EncodeExplorer::getConfig('show_top') == true)
-{
-?>
-<div id="top">
-	<a href="<?php print $this->makeLink(false, false, null, null, null, ""); ?>"><span><?php if(EncodeExplorer::getConfig('main_title') != null) print EncodeExplorer::getConfig('main_title'); ?></span></a>
-<?php
-if(EncodeExplorer::getConfig("secondary_titles") != null && is_array(EncodeExplorer::getConfig("secondary_titles")) && count(EncodeExplorer::getConfig("secondary_titles")) > 0 && $this->mobile == false)
-{
-	$secondary_titles = EncodeExplorer::getConfig("secondary_titles");
-	print "<div class=\"subtitle\">".$secondary_titles[array_rand($secondary_titles)]."</div>\n";
-}
-?>
-</div>
-<?php
-}
-
-// Checking if the user is allowed to access the page, otherwise showing the login box
-if(!GateKeeper::isAccessAllowed())
-{
-	$this->printLoginBox();
-}
-else
-{
-if($this->mobile == false && EncodeExplorer::getConfig("show_path") == true)
-{
-?>
-<div class="breadcrumbs">
-<a href="?dir="><?php print $this->getString("root"); ?></a>
-<?php
-	for($i = 0; $i < count($this->location->path); $i++)
-	{
-		print "&gt; <a href=\"".$this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, count($this->location->path) - $i - 1))."\">";
-		print $this->location->getPathLink($i, true);
-		print "</a>\n";
-	}
-?>
-</div>
-<?php
-}
-?>
-
-<!-- START: List table -->
-<table class="table">
-<?php
-if($this->mobile == false)
-{
-?>
-<tr class="row one header">
-	<td class="icon"> </td>
-	<td class="name"><?php print $this->makeArrow("name");?></td>
-	<td class="size"><?php print $this->makeArrow("size"); ?></td>
-	<td class="changed"><?php print $this->makeArrow("mod"); ?></td>
-	<?php if($this->mobile == false && GateKeeper::isDeleteAllowed()){?>
-	<td class="del"><?php print EncodeExplorer::getString("del"); ?></td>
-	<?php } ?>
-</tr>
-<?php
-}
-?>
-<tr class="row two">
-	<td class="icon"><img alt="dir" src="?img=directory" /></td>
-	<td colspan="<?php print (($this->mobile == true?2:(GateKeeper::isDeleteAllowed()?4:3))); ?>" class="long">
-		<a class="item" href="<?php print $this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, 1)); ?>">..</a>
-	</td>
-</tr>
-<?php
-//
-// Ready to display folders and files.
-//
-$row = 1;
-
-//
-// Folders first
-//
-if($this->dirs)
-{
-	foreach ($this->dirs as $dir)
-	{
-		$row_style = ($row ? "one" : "two");
-		print "<tr class=\"row ".$row_style."\">\n";
-		print "<td class=\"icon\"><img alt=\"dir\" src=\"?img=directory\" /></td>\n";
-		print "<td class=\"name\" colspan=\"".($this->mobile == true?2:3)."\">\n";
-		print "<a href=\"".$this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, 0).$dir->getNameEncoded())."\" class=\"item dir\">";
-		print $dir->getNameHtml();
-		print "</a>\n";
-		print "</td>\n";
-		if($this->mobile == false && GateKeeper::isDeleteAllowed()){
-			print "<td class=\"del\"><a data-name=\"".htmlentities($dir->getName())."\" href=\"".$this->makeLink(false, false, null, null, $this->location->getDir(false, true, false, 0).$dir->getNameEncoded(), $this->location->getDir(false, true, false, 0))."\"><img src=\"?img=del\" alt=\"Delete\" /></a></td>";
-		}
-		print "</tr>\n";
-		$row =! $row;
-	}
-}
-
-//
-// Now the files
-//
-if($this->files)
-{
-	$count = 0;
-	foreach ($this->files as $file)
-	{
-		$row_style = ($row ? "one" : "two");
-		print "<tr class=\"row ".$row_style.(++$count == count($this->files)?" last":"")."\">\n";
-		print "<td class=\"icon\"><img alt=\"".$file->getType()."\" src=\"".$this->makeIcon($file->getType())."\" /></td>\n";
-		print "<td class=\"name\">\n";
-		print "\t\t<a href=\"".$this->location->getDir(false, true, false, 0).$file->getNameEncoded()."\"";
-		if(EncodeExplorer::getConfig('open_in_new_window') == true)
-			print "target=\"_blank\"";
-		print " class=\"item file";
-		if($file->isValidForThumb())
-			print " thumb";
-		print "\">";
-		print $file->getNameHtml();
-		if($this->mobile == true)
-		{
-			print "<span class =\"size\">".$this->formatSize($file->getSize())."</span>";
-		}
-		print "</a>\n";
-		print "</td>\n";
-		if($this->mobile != true)
-		{
-			print "<td class=\"size\">".$this->formatSize($file->getSize())."</td>\n";
-			print "<td class=\"changed\">".$this->formatModTime($file->getModTime())."</td>\n";
-		}
-		if($this->mobile == false && GateKeeper::isDeleteAllowed()){
-			print "<td class=\"del\">
-				<a data-name=\"".htmlentities($file->getName())."\" href=\"".$this->makeLink(false, false, null, null, $this->location->getDir(false, true, false, 0).$file->getNameEncoded(), $this->location->getDir(false, true, false, 0))."\">
-					<img src=\"?img=del\" alt=\"Delete\" />
-				</a>
-			</td>";
-		}
-		print "</tr>\n";
-		$row =! $row;
-	}
-}
-
-
-//
-// The files and folders have been displayed
-//
-?>
-
-</table>
-<!-- END: List table -->
-<?php
-}
-?>
-</div>
-
-<?php
-if(GateKeeper::isAccessAllowed() && GateKeeper::showLoginBox()){
-?>
-<!-- START: Login area -->
-<form enctype="multipart/form-data" method="post">
-	<div id="login_bar">
-	<?php print $this->getString("username"); ?>:
-	<input type="text" name="user_name" value="" id="user_name" />
-	<?php print $this->getString("password"); ?>:
-	<input type="password" name="user_pass" id="user_pass" />
-	<input type="submit" class="submit" value="<?php print $this->getString("log_in"); ?>" />
-	<div class="bar"></div>
-	</div>
-</form>
-<!-- END: Login area -->
-<?php
-}
-
-if(GateKeeper::isAccessAllowed() && $this->location->uploadAllowed() && (GateKeeper::isUploadAllowed() || GateKeeper::isNewdirAllowed()))
-{
-?>
-<!-- START: Upload area -->
-<form enctype="multipart/form-data" method="post">
-	<div id="upload">
 		<?php
-		if(GateKeeper::isNewdirAllowed()){
-		?>
-		<div id="newdir_container">
-			<input name="userdir" type="text" class="upload_dirname" />
-			<input type="submit" value="<?php print $this->getString("make_directory"); ?>" />
-		</div>
-		<?php
+		// Checking if the user is allowed to access the page, otherwise showing the login box
+		if(!GateKeeper::isAccessAllowed())
+		{
+			$this->printLoginBox();
 		}
-		if(GateKeeper::isUploadAllowed()){
+		else
+		{
+		if($this->mobile == false && EncodeExplorer::getConfig("show_path") == true)
+		{
 		?>
-		<div id="upload_container">
-			<input name="userfile" type="file" class="upload_file" />
-			<input type="submit" value="<?php print $this->getString("upload"); ?>" class="upload_sumbit" />
+		<div class="breadcrumbs">
+		<a href="?dir="><?php print $this->getString("root"); ?></a>
+		<?php
+			for($i = 0; $i < count($this->location->path); $i++)
+			{
+				print "&gt; <a href=\"".$this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, count($this->location->path) - $i - 1))."\">";
+				print $this->location->getPathLink($i, true);
+				print "</a>\n";
+			}
+		?>
 		</div>
 		<?php
 		}
 		?>
-		<div class="bar"></div>
+
+		<!-- START: List table -->
+		<table class="table">
+		<?php
+		if($this->mobile == false)
+		{
+		?>
+		<tr class="row one header">
+			<td class="icon"> </td>
+			<td class="name"><?php print $this->makeArrow("name");?></td>
+			<td class="size"><?php print $this->makeArrow("size"); ?></td>
+			<td class="changed"><?php print $this->makeArrow("mod"); ?></td>
+			<?php if($this->mobile == false && GateKeeper::isDeleteAllowed()){?>
+			<td class="del"><?php print EncodeExplorer::getString("del"); ?></td>
+			<?php } ?>
+		</tr>
+		<?php
+		}
+		?>
+		<tr class="row two">
+			<td class="icon"><img alt="dir" src="?img=directory" /></td>
+			<td colspan="<?php print (($this->mobile == true?2:(GateKeeper::isDeleteAllowed()?4:3))); ?>" class="long">
+				<a class="item" href="<?php print $this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, 1)); ?>">..</a>
+			</td>
+		</tr>
+		<?php
+		//
+		// Ready to display folders and files.
+		//
+		$row = 1;
+
+		//
+		// Folders first
+		//
+		if($this->dirs)
+		{
+			foreach ($this->dirs as $dir)
+			{
+				$row_style = ($row ? "one" : "two");
+				print "<tr class=\"row ".$row_style."\">\n";
+				print "<td class=\"icon\"><img alt=\"dir\" src=\"?img=directory\" /></td>\n";
+				print "<td class=\"name\" colspan=\"".($this->mobile == true?2:3)."\">\n";
+				print "<a href=\"".$this->makeLink(false, false, null, null, null, $this->location->getDir(false, true, false, 0).$dir->getNameEncoded())."\" class=\"item dir\">";
+				print $dir->getNameHtml();
+				print "</a>\n";
+				print "</td>\n";
+				if($this->mobile == false && GateKeeper::isDeleteAllowed()){
+					print "<td class=\"del\"><a data-name=\"".htmlentities($dir->getName())."\" href=\"".$this->makeLink(false, false, null, null, $this->location->getDir(false, true, false, 0).$dir->getNameEncoded(), $this->location->getDir(false, true, false, 0))."\"><img src=\"?img=del\" alt=\"Delete\" /></a></td>";
+				}
+				print "</tr>\n";
+				$row =! $row;
+			}
+		}
+
+		//
+		// Now the files
+		//
+		if($this->files)
+		{
+			$count = 0;
+			foreach ($this->files as $file)
+			{
+				$row_style = ($row ? "one" : "two");
+				print "<tr class=\"row ".$row_style.(++$count == count($this->files)?" last":"")."\">\n";
+				print "<td class=\"icon\"><img alt=\"".$file->getType()."\" src=\"".$this->makeIcon($file->getType())."\" /></td>\n";
+				print "<td class=\"name\">\n";
+				print "\t\t<a href=\"".$this->location->getDir(false, true, false, 0).$file->getNameEncoded()."\"";
+				if(EncodeExplorer::getConfig('open_in_new_window') == true)
+					print "target=\"_blank\"";
+				print " class=\"item file";
+				if($file->isValidForThumb())
+					print " thumb";
+				print "\">";
+				print $file->getNameHtml();
+				if($this->mobile == true)
+				{
+					print "<span class =\"size\">".$this->formatSize($file->getSize())."</span>";
+				}
+				print "</a>\n";
+				print "</td>\n";
+				if($this->mobile != true)
+				{
+					print "<td class=\"size\">".$this->formatSize($file->getSize())."</td>\n";
+					print "<td class=\"changed\">".$this->formatModTime($file->getModTime())."</td>\n";
+				}
+				if($this->mobile == false && GateKeeper::isDeleteAllowed()){
+					print "<td class=\"del\">
+						<a data-name=\"".htmlentities($file->getName())."\" href=\"".$this->makeLink(false, false, null, null, $this->location->getDir(false, true, false, 0).$file->getNameEncoded(), $this->location->getDir(false, true, false, 0))."\">
+							<img src=\"?img=del\" alt=\"Delete\" />
+						</a>
+					</td>";
+				}
+				print "</tr>\n";
+				$row =! $row;
+			}
+		}
+
+
+		//
+		// The files and folders have been displayed
+		//
+		?>
+
+		</table>
+		<!-- END: List table -->
+		<?php
+		}
+		?>
+		</div>
+
+		<?php
+		if(GateKeeper::isAccessAllowed() && GateKeeper::showLoginBox()){
+		?>
+		<!-- START: Login area -->
+		<form enctype="multipart/form-data" method="post">
+			<div id="login_bar">
+			<?php print $this->getString("username"); ?>:
+			<input type="text" name="user_name" value="" id="user_name" />
+			<?php print $this->getString("password"); ?>:
+			<input type="password" name="user_pass" id="user_pass" />
+			<input type="submit" class="submit" value="<?php print $this->getString("log_in"); ?>" />
+			<div class="bar"></div>
+			</div>
+		</form>
+		<!-- END: Login area -->
+		<?php
+		}
+
+		if(GateKeeper::isAccessAllowed() && $this->location->uploadAllowed() && (GateKeeper::isUploadAllowed() || GateKeeper::isNewdirAllowed()))
+		{
+		?>
+		<!-- START: Upload area -->
+		<form enctype="multipart/form-data" method="post">
+			<div id="upload">
+				<?php
+				if(GateKeeper::isNewdirAllowed()){
+				?>
+				<div id="newdir_container">
+					<input name="userdir" type="text" class="upload_dirname" />
+					<input type="submit" value="<?php print $this->getString("make_directory"); ?>" />
+				</div>
+				<?php
+				}
+				if(GateKeeper::isUploadAllowed()){
+				?>
+				<div id="upload_container">
+					<input name="userfile" type="file" class="upload_file" />
+					<input type="submit" value="<?php print $this->getString("upload"); ?>" class="upload_sumbit" />
+				</div>
+				<?php
+				}
+				?>
+				<div class="bar"></div>
+			</div>
+		</form>
+		<!-- END: Upload area -->
+		<?php
+		}
+
+		?>
+		<!-- START: Info area -->
+		<div id="info">
+		<?php
+		if(GateKeeper::isUserLoggedIn())
+			print "<a href=\"".$this->makeLink(false, true, null, null, null, "")."\">".$this->getString("log_out")."</a> | ";
+
+		if(EncodeExplorer::getConfig("mobile_enabled") == true)
+		{
+			print "<a href=\"".$this->makeLink(true, false, null, null, null, $this->location->getDir(false, true, false, 0))."\">\n";
+			print ($this->mobile == true)?$this->getString("standard_version"):$this->getString("mobile_version")."\n";
+			print "</a> | \n";
+		}
+		if(GateKeeper::isAccessAllowed() && $this->getConfig("calculate_space_level") > 0 && $this->mobile == false)
+		{
+			print $this->getString("total_used_space").": ".$this->spaceUsed." MB | ";
+		}
+		if($this->mobile == false && $this->getConfig("show_load_time") == true)
+		{
+			printf($this->getString("page_load_time")." | ", (microtime(TRUE) - $_START_TIME)*1000);
+		}
+		?>
+		<a href="http://encode-explorer.siineiolekala.net">Encode Explorer</a>
+		</div>
+		<!-- END: Info area -->
+
+
+
+</div>			
+
+			<hr>
+				<footer><p>   </p></footer>
+			</div>
+
+
+		</div>
 	</div>
-</form>
-<!-- END: Upload area -->
-<?php
-}
-
-?>
-<!-- START: Info area -->
-<div id="info">
-<?php
-if(GateKeeper::isUserLoggedIn())
-	print "<a href=\"".$this->makeLink(false, true, null, null, null, "")."\">".$this->getString("log_out")."</a> | ";
-
-if(EncodeExplorer::getConfig("mobile_enabled") == true)
-{
-	print "<a href=\"".$this->makeLink(true, false, null, null, null, $this->location->getDir(false, true, false, 0))."\">\n";
-	print ($this->mobile == true)?$this->getString("standard_version"):$this->getString("mobile_version")."\n";
-	print "</a> | \n";
-}
-if(GateKeeper::isAccessAllowed() && $this->getConfig("calculate_space_level") > 0 && $this->mobile == false)
-{
-	print $this->getString("total_used_space").": ".$this->spaceUsed." MB | ";
-}
-if($this->mobile == false && $this->getConfig("show_load_time") == true)
-{
-	printf($this->getString("page_load_time")." | ", (microtime(TRUE) - $_START_TIME)*1000);
-}
-?>
-<a href="http://encode-explorer.siineiolekala.net">Encode Explorer</a>
-</div>
-<!-- END: Info area -->
 </body>
 </html>
 
