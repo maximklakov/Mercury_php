@@ -29,6 +29,7 @@ function afterSuccess()
 	$('#submit-btn').show(); //hide submit button
 	$('#loading-img').hide(); //hide submit button
 	$('#progressbox').delay( 1000 ).fadeOut(); //hide progress bar
+	document.getElementById('file_browser_frame').contentWindow.location.reload();
 
 }
 
@@ -113,19 +114,21 @@ function bytesToSize(bytes) {
 </script>
 <link href="css/uploader.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<div id="upload-wrapper">
-<div align="center">
-<h3>Ajax File Uploader</h3>
-<form action="processupload.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
-<input name="FileInput" id="FileInput" type="file" />
-<input type="submit"  id="submit-btn" value="Upload" />
-<img src="img/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
-</form>
-<div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
-<div id="output"></div>
-</div>
-</div>
-
+<body style="height:100%">
+	<div id="upload-wrapper">
+		<div align="center">
+			<h3>Ajax File Uploader</h3>
+			<form action="processupload.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
+			<input name="FileInput" id="FileInput" type="file" />
+			<input type="submit"  id="submit-btn" value="Upload" />
+			<img src="img/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
+			</form>
+		<div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
+		<div id="output"></div>
+			<div style="height:100%">
+				<iframe src="http://estate.vn.ua/img/uploads/" style = "width:90%;  height:700px" id="file_browser_frame"></iframe>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

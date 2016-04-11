@@ -3,7 +3,7 @@
 if(isset($_FILES["FileInput"]) && $_FILES["FileInput"]["error"]== UPLOAD_ERR_OK)
 {
 	############ Edit settings ##############
-	$UploadDirectory	= __DIR__ . '/uploads/'; //specify upload directory ends with / (slash)
+	$UploadDirectory	= __DIR__ . '../estate.vn.ua/img/uploads/'; //specify upload directory ends with / (slash)
 	##########################################
 	
 	/*
