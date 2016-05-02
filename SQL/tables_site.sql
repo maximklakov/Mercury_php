@@ -61,6 +61,7 @@ Drop Table IF EXISTS main.languages cascade;
 			text1 VARCHAR(500),
 			text2 VARCHAR(500),
 			article_text text,
+			img bytea,
 			order_value int not null default 0
 		);
 		
@@ -119,7 +120,8 @@ Drop Table IF EXISTS main.languages cascade;
 			Phone VARCHAR(50) not null,
 			Status SMALLINT not null default 0,
 			Profile_Picture VARCHAR(250),
-			position VARCHAR(50)
+			position VARCHAR(50),
+			img bytea
 		);
 
 	ALTER TABLE main.agents ADD CONSTRAINT FK_Agent_Domain foreign key (Domain_Id) references main.Domains (Id);
