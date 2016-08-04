@@ -8,7 +8,7 @@ class LangUkr {
 	public $About = "Про нас";
 	public $Team = "Команда";
 	public $Contact = "Контакти";
-	public $MainTitle = "Агенція нерухомості 121 Real Estate";
+	public $MainTitle = "Перша агенція нерухомості";
 	
 	public $WelcomeToOurStudio = "Чи можете ви знайти мені житло моєї мрії?";
 	public $ItsNiceToMeetYou = "ТАК, ЗАЛЮБКИ!";
@@ -29,10 +29,10 @@ class LangUkr {
 	public $YourMessage = "ваше повідомлення";
 	public $PleaseEnter = "Будь ласка введіть";
 	public $SendMessage = "Надіслати";
-	public $Address = "Агенство Нерухомості 121. вул. Соборна, 28, Вінниця";
+	public $Address = "Перше Агенство Нерухомості. вул. Соборна, 28, Вінниця";
 	public $CallUs = "Дзвоніть";
 	
-	public $Copyright = "Copyright &copy; 121 Real Estate";	
+	public $Copyright = "Copyright &copy; 1st Real Estate";	
 }
 
 $_L = new LangUkr;

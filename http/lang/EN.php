@@ -7,7 +7,7 @@ class LngENG {
 	public $About = "About";
 	public $Team = "Team";
 	public $Contact = "Contact";
-	public $MainTitle = "121 Real Estate Agency";
+	public $MainTitle = "1st Real Estate Agency";
 	
 	public $WelcomeToOurStudio = "Welcome To Our Studio!";
 	public $ItsNiceToMeetYou = "It's Nice To Meet You";
@@ -33,7 +33,7 @@ class LngENG {
 	
 	
 	
-	public $Copyright = "Copyright &copy; 121 Real Estate";
+	public $Copyright = "Copyright &copy; 1st Real Estate Agency";
 	
 	
 	/* public $ = ""; */
